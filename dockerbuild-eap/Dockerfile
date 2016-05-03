@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/jboss-eap-6/eap64-openshift:1.3
+FROM registry.access.redhat.com/jboss-eap-6/eap64-openshift:1.2
 
 MAINTAINER Siamak Sadeghianfar <ssadeghi@redhat.com>
 
