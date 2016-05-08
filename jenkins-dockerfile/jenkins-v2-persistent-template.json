@@ -32,7 +32,7 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      deploymentConfig: ${JENKINS_SERVICE_NAME}
     sessionAffinity: None
     type: ClusterIP
 - apiVersion: v1
@@ -149,7 +149,7 @@ objects:
   spec:
     replicas: 1
     selector:
-      name: ${JENKINS_SERVICE_NAME}
+      deploymentConfig: ${JENKINS_SERVICE_NAME}
     strategy:
       type: Recreate
     template:
@@ -157,18 +157,20 @@ objects:
         creationTimestamp: null
         labels:
           name: ${JENKINS_SERVICE_NAME}
+          deploymentConfig: ${JENKINS_SERVICE_NAME}
+        name: ${JENKINS_SERVICE_NAME}
       spec:
         containers:
         - capabilities: {}
-          image: ${JENKINS_SERVICE_NAME}
-          imagePullPolicy: IfNotPresent
+          image: cicd/${JENKINS_SERVICE_NAME}
+          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               path: /login
               port: 8080
             initialDelaySeconds: 60
             timeoutSeconds: 3
-          name: jenkins
+          name: ${JENKINS_SERVICE_NAME}
           readinessProbe:
             httpGet:
               path: /login
@@ -192,6 +194,14 @@ objects:
           persistentVolumeClaim:
             claimName: ${JENKINS_SERVICE_NAME}
     triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${JENKINS_SERVICE_NAME}
+        from:
+          kind: ImageStream
+          name: ${JENKINS_SERVICE_NAME}
+      type: ImageChange
     - type: ConfigChange
 parameters:
 - description: Maximum amount of memory the container can use.
