@@ -1,4 +1,4 @@
-FROM jenkins:2.0
+FROM docker.io/library/jenkins:2.0
 
 MAINTAINER Siamak Sadeghianfar <ssadeghi@redhat.com>
 
