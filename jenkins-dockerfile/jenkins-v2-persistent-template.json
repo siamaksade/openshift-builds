@@ -162,7 +162,7 @@ objects:
       spec:
         containers:
         - capabilities: {}
-          image: cicd/${JENKINS_SERVICE_NAME}
+          image: ${JENKINS_SERVICE_NAME}
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
