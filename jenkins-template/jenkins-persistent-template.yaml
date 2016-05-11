@@ -158,7 +158,7 @@ objects:
             privileged: false
           terminationMessagePath: /dev/termination-log
           volumeMounts:
-          - mountPath: /var/lib/jenkins
+          - mountPath: /var/jenkins_home
             name: ${JENKINS_SERVICE_NAME}-data
         dnsPolicy: ClusterFirst
         restartPolicy: Always
